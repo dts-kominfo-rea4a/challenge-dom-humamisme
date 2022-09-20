@@ -5,37 +5,156 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Challenge - DOM</title>
+
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body{
+        margin: 0 16px;
+        background-color: beige;
+        font-family: sans-serif;
+      }
+      #app{
+        margin: 32px auto;
+        padding: 24px 32px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 4px 8px 40px rgba(58, 59, 65, 0.2);
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      #todo-title{
+        padding: 8px 16px;
+        background-color: bisque;
+        border-radius: 4px;
+      }
+      #todo-subtitle{
+        text-align: center;
+        font-weight: normal;
+        font-size: 1.25rem;
+      }
+      .input{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+      #todo-input{
+        height: 32px;
+        padding: 0 6px;
+        border-radius: 4px 0 0 4px;
+        border: 1px solid #333;
+        flex-grow: 1;
+        max-width: 300px;
+      }
+      #todo-input:focus{
+        outline: bisque solid 4px;
+      }
+      #todo-submit{
+        padding: 0 16px;
+        background-color: rgb(155, 83, 83);
+        border: none;
+        border-radius: 0 4px 4px 0;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      #todo-submit:active{
+        background-color: rgb(129, 72, 72);
+      }
+      #todo-output{
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        min-height: 96px;
+        margin-top: 12px;
+      }
+      #todo-output>*{
+        background-color: #fefefe;
+        padding: 8px;
+        box-shadow: 2px 2px 12px rgba(120, 121, 129, 0.3);
+        border-radius: 2px;
+        min-height: 40px;
+        min-width: 40px;
+        position: relative;
+        padding-left: 16px;
+        display: flex;
+        align-items: center;
+      }
+      #todo-output>*::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 8px;
+        border-radius: 2px 0 0 2px;
+        background-color: brown;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
       <!-- TODO: Buatlah sebuah header dengan id todo-title -->
       <!-- TODO: Buatlah sebuah subtitle dengan id todo-subtitle -->
+      <h1 id="todo-title">To-Do List</h1>
+      <h2 id="todo-subtitle">~Today I need to~</h2>
 
       <!-- Section: input -->
       <!-- TODO: Buatlah sebuah input bertipe text dengan id todo-input -->
       <!-- TODO: Buatlah sebuah button dengan id todo-submit -->
+      <section class="input">
+        <input type="text" id="todo-input">
+        <input type="submit" value="Submit" id="todo-submit">
+      </section class="input">
 
       <!-- Section output -->
       <!-- TODO: Buatlah sebuah <ul> dengan id todo-output -->
+      <section>
+        <ul id="todo-output">
+        </ul>
+      </section>
     </div>
 
     <!-- ! Untuk tantangan ini, script jangan diubah ke external js yah ! -->
     <script>
       // TODO: Deklarasi variable sesuai dengan kebutuhan di sini
-      let button;
-      let input;
-      let output;
+      let button = document.getElementById("todo-submit");
+      let input = document.getElementById("todo-input");
+      let output = document.getElementById("todo-output");
 
       // TODO: Buatlah sebuah fungsi dengan nama fnClickHandler
       // Fungsi yang digunakan untuk menambahkan tulisan
       // Jangan ubah cara deklarasi fungsinya, cukup isi saja
-      function fnClickHandler(toDoItem) {}
+      function fnClickHandler(toDoItem) {
+        const item = document.createElement("li");
+        item.innerText = toDoItem;
+        
+        output.append(item);
+        input.value = "";
+      }
 
       // TODO: register event onclick / addEventListener untuk button
       // akan menjalankan fungsi fnClickHandler
+      button.addEventListener("click", () => {
+        const todoText = input.value;
+        fnClickHandler(input.value);
+      });
       
       // TODO: register event onkeypress / addEventListener untuk input
       // sehingga saat di input ditekan enter akan menjalankan fungsi fnClickHandler juga
+      input.addEventListener("keypress", (ev) => {
+        if(ev.key === "Enter") {
+          fnClickHandler(input.value);
+        }
+      })
     </script>
   </body>
 </html>
